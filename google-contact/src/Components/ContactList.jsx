@@ -3,8 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 //import { fullName } from "../utils";
 import { fullName } from "../utils/contactUtils";
 import { useMemo } from "react";
- const ContactList = ({ contacts, q }) => {
+ const ContactList = ({ contacts, q, favorites = [], setFavorites = () => {} }) => {
       const nav = useNavigate();
+      
+      const toggleFavorite = (id, e) => {
+        e.preventDefault();
+        setFavorites((prev) =>
+          prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id],
+        );
+      };
+
       const filtered = useMemo(() => {
         const s = q.toLowerCase();
         return contacts.filter(c => fullName(c).toLowerCase().includes(s) || c.email.toLowerCase().includes(s) || c.phone.includes(s));
@@ -45,6 +53,13 @@ import { useMemo } from "react";
                     <div className="sub">{c.email}</div>
                   </div>
                   <div className="row-actions">
+                    <button 
+                      className="icon-btn" 
+                      title={favorites.includes(c.id) ? "Remove from frequent" : "Add to frequent"}
+                      onClick={(e) => toggleFavorite(c.id, e)}
+                    >
+                      <i className={`bi ${favorites.includes(c.id) ? 'bi-star-fill' : 'bi-star'}`}></i>
+                    </button>
                     <button className="icon-btn" title="Email" onClick={e=>e.preventDefault()}><i className="bi bi-envelope"></i></button>
                     <button className="icon-btn" title="Call" onClick={e=>e.preventDefault()}><i className="bi bi-telephone"></i></button>
                     <button className="icon-btn" title="More" onClick={e=>e.preventDefault()}><i className="bi bi-three-dots-vertical"></i></button>

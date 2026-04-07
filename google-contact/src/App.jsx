@@ -8,6 +8,7 @@ import ContactForm from "./Components/ContactForm";
 import PlaceholderPage from "./Components/PlaceholderPage";
 import LabelPage from "./Components/LabelPage";
 import TrashPage from "./Components/TrashPage";
+import FrequentPage from "./Components/FrequentPage";
 import './index.css';
  const App = () => {
   const [favorites, setFavorites] = useState([]);
@@ -39,13 +40,13 @@ import './index.css';
             <Sidebar />
             <main className="main">
               <Routes>
-                <Route path="/" element={<ContactList contacts={contacts} q={q} />} />
+                <Route path="/" element={<ContactList contacts={contacts} q={q} favorites={favorites} setFavorites={setFavorites} />} />
                 {/* <Route path="/contact/:id" element={<ContactDetail contacts={contacts} />} /> */}
                 {/* <Route path="/contact/:id" element={ <ContactDetail contacts={contacts} favorites={favorites} setFavorites={setFavorites} setContacts={setContacts} /> }/> */}
                 <Route path="/contact/:id" element={<ContactDetail contacts={contacts} setContacts={setContacts} favorites={favorites} setFavorites={setFavorites} trash={trash} setTrash={setTrash}/>}/>
                 <Route path="/new" element={<ContactForm contacts={contacts} setContacts={setContacts} />} />
                 <Route path="/edit/:id" element={<ContactForm contacts={contacts} setContacts={setContacts} edit />} />
-                <Route path="/frequent" element={<PlaceholderPage icon="bi-clock-history" title="Frequently contacted" desc="People you contact most will appear here." />} />
+                <Route path="/frequent" element={<FrequentPage contacts={contacts} favorites={favorites} setFavorites={setFavorites} />} />
                 <Route path="/directory" element={<PlaceholderPage icon="bi-building" title="Directory" desc="Your organization's contacts will appear here." />} />
                 {/* <Route path="/label/:name" element={<PlaceholderPage icon="bi-bookmark" title="Labels" desc="Contacts you've labeled will appear here." />} /> */}
                 {/* <Route path="/trash" element={<PlaceholderPage icon="bi-trash" title="Trash" desc="Deleted contacts stay here for 30 days." />} /> */}
